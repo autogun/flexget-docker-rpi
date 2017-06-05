@@ -1,0 +1,55 @@
+templates:
+  pushbullet-tmpl:
+    notify:
+      entries:
+        title: "[FlexGet] {{ series_name }} {{ series_id }}"
+        message: "{{ title }}\n\nSize: {{ content_size|round }}MB"
+        via:
+        - pushbullet:
+            api_key: '<api_key>'
+
+  transmission-tmpl:
+    transmission:
+      host: transmission
+      port: 9091
+      username: <username>
+      password: <password>
+      
+    clean_transmission:
+      host: transmission
+      port: 9091
+      username: <username>
+      password: <password>
+      finished_for: 6 hours
+
+  myepisodes-tmpl:
+    configure_series:
+      from:
+        myepisodes_list:
+          username: <username>
+          password: <password>
+          strip_dates: yes
+      settings:
+        quality: 720p+
+        identified_by: ep
+    download: ~/downloads/tv/
+      
+tasks:
+  tv_shows:
+    template: 
+      - myepisodes-tmpl
+      - transmission-tmpl
+      - pushbullet-tmpl
+    discover:
+      what:
+        - next_series_episodes: yes
+      from:
+        - rarbg:
+            category: 41
+            sorted_by: seeders
+            ranked: no
+
+schedules:
+  - tasks: tv_shows
+    interval:
+      minutes: 5
