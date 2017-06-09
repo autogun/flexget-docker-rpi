@@ -2,11 +2,14 @@
 FlexGet Docker container to run on your Raspberry Pi
 
 ## Build it
+```
 git clone https://github.com/autogun/flexget-docker-rpi.git
 cd flexget-docker-rpi
 docker build -t autogun/flexget .
+```
 
 ## Run it
+```
 docker run -d \
 	--name flexget \
 	--net-alias=flexget \
@@ -16,3 +19,4 @@ docker run -d \
 	--volume="/var/media/RPI/TV Shows/":/root/downloads/tv \
 	--publish=5050:5050 \
 	autogun/flexget
+```
