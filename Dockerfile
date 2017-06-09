@@ -12,6 +12,7 @@ RUN mkdir -p ~/.flexget \
 	~/torrents/tv/ \
 	&& touch /root/.flexget/config.yml
 	
-VOLUME ["/root/.flexget"]
+VOLUME ["/root/downloads/tv/"]
+VOLUME ["/root/torrents/tv/"]
 
 CMD ["flexget", "--loglevel", "info", "daemon", "start"]
