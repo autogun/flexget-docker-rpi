@@ -1,5 +1,9 @@
-FROM armhf/alpine
+FROM arm32v6/alpine:latest
 LABEL maintainer "autogun@gmail.com"
+
+VOLUME [ "/sys/fs/cgroup" ]
+VOLUME ["/root/downloads/tv/"]
+VOLUME ["/root/torrents/tv/"]
 
 RUN apk add --update py-pip py-setuptools ca-certificates \
 	&& rm -rf /var/cache/apk/*
@@ -12,7 +16,4 @@ RUN mkdir -p ~/.flexget \
 	~/torrents/tv/ \
 	&& touch /root/.flexget/config.yml
 	
-VOLUME ["/root/downloads/tv/"]
-VOLUME ["/root/torrents/tv/"]
-
 CMD ["flexget", "--loglevel", "info", "daemon", "start"]
